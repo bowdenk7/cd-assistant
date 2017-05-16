@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  .page-header
+    h3 Projects
+
+  h3 New Project
+  form.form-horizontal(id='create-project-form', method='PUT')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='projectName') Project Name
+      .col-sm-7
+        input.form-control(type='text', name='projectName', id='projectName')
+    .form-group
+      label.col-sm-3.control-label(for='description') Description
+      .col-sm-7
+        input.form-control(type='text', name='description', id='description')
+    .form-group
+      label.col-sm-3.control-label(for='marketSize') Market Size
+      .col-sm-7
+        input.form-control(type='text', name='marketSize', id='marketSize')
+    .form-group
+      label.col-sm-3.control-label(for='marketSizeUnit') Market Size Unit
+      .col-sm-7
+        input.form-control(type='text', name='marketSizeUnit', id='marketSizeUnit')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-pencil
+          | Create

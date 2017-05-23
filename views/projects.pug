@@ -5,7 +5,7 @@ block content
     h3 Projects
 
   h3 New Project
-  form.form-horizontal(id='create-project-form', method='PUT')
+  form.form-horizontal(id='create-project-form', action='/project', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.col-sm-3.control-label(for='projectName') Project Name

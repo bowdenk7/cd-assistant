@@ -121,7 +121,8 @@ app.post("/account/password", passportConfig.isAuthenticated, userController.pos
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
 app.get("/projects", projectController.getProjects);
-app.put("/project", projectController.createProject);
+app.post("/projects", projectController.createProject);
+app.get("/goals", projectController.getGoals);
 
 /**
  * OAuth authentication routes. (Sign in)

@@ -11,12 +11,18 @@ export let getProjects = (req: Request, res: Response) => {
   });
 };
 
+export let getGoals = (req: Request, res: Response) => {
+  res.render("goals", {
+    title: "Goals"
+  });
+};
+
 /**
  * PUT /project
  * Creates a new project and saves to database.
  */
 export let createProject = (req: Request, res: Response, next: NextFunction) => {
-  req.assert("email", "Title is required").notEmpty();
+  req.assert("email", "Project name is required").notEmpty();
 
   const errors = req.validationErrors();
 

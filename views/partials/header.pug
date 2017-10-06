@@ -11,13 +11,10 @@
         | CD Assitant
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        li(class=(title == 'Home') ? 'active' : undefined)
-          a(href='/') Home
-        li(class=(title == 'Goals') ? 'active' : undefined)
-          a(href='/goals') Goal
+        
+      ul.nav.navbar-nav.navbar-right
         li(class=(title == 'Docs') ? 'active' : undefined)
           a(href='/docs') Docs
-      ul.nav.navbar-nav.navbar-right
         if !user
           li(class=(title == 'Login') ? 'active' : undefined)
             a(href='/login') Login

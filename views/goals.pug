@@ -2,10 +2,15 @@ extends layout
 
 block content
   .page-header
-    h3 _Project_ Goals
+    h1=project.name + " goals"
+
+  if project.goals
+    ul
+      each goal in project.goals
+        li=goal.text
 
   h3 Add Goals
-  form.form-horizontal(id='create-goals-form', action='/goals', method='POST')
+  form.form-horizontal(id='create-goals-form', action='/project/' + project._id + '/goal', method='POST')
     input(type='hidden', name='_csrf', value=_csrf)
     .form-group
       label.col-sm-3.control-label(for='goal') Goal
@@ -14,5 +19,5 @@ block content
     .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
-          i.fa.fa-pencil
+          i.fa.fa-plus
           | Add

@@ -1,0 +1,36 @@
+if user
+    nav.col-sm-3.col-md-2.d-none.d-sm-block.bg-light.sidebar.affix
+        ul.nav.flex-column
+            li.dropdown(role="presentation")
+                a.dropdown-toggle(data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false")
+                    if project
+                        span=project.name
+                    else
+                        span Select project
+                    span.caret
+                ul.dropdown-menu
+                    if session.projects
+                        each project in session.projects
+                            li
+                                a(href="/project/"+project._id)=project.name
+                        hr.menu-break
+                    li  
+                        a(href="/newProject") New project
+                    
+            hr.menu-break
+
+            if project
+                li(class=(title == 'Project Home') ? 'active' : undefined)
+                    a(href='/project/'+project._id) Project Home
+                li(class=(title == 'Goals') ? 'active' : undefined)
+                    a(href='/project/'+project._id+'/goals') Goals
+                li(class=(title == 'Hypotheses') ? 'active' : undefined) 
+                    a(href='/project/'+project._id+'/hypotheses') Hypotheses
+                li.disabled
+                    a(href='/project/'+project._id+'/questions') Questions
+                li.disabled
+                    a(href='/project/'+project._id+'/customerData') Customer data
+                li.disabled
+                    a(href='/project/'+project._id+'/reports') Reports
+
+

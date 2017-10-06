@@ -38,6 +38,8 @@ import * as projectController from "./controllers/project";
  */
 import * as passportConfig from "./config/passport";
 
+import { Project } from "./models/Project";
+
 /**
  * Create Express server.
  */
@@ -68,7 +70,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
 app.use(session({
-  resave: true,
+  // resave: true,
   saveUninitialized: true,
   secret: process.env.SESSION_SECRET,
   store: new MongoStore({
@@ -83,6 +85,7 @@ app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
 app.use((req, res, next) => {
   res.locals.user = req.user;
+  res.locals.session = req.session;
   next();
 });
 app.use((req, res, next) => {
@@ -120,17 +123,15 @@ app.post("/account/profile", passportConfig.isAuthenticated, userController.post
 app.post("/account/password", passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post("/account/delete", passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userController.getOauthUnlink);
-app.get("/projects", projectController.getProjects);
-app.post("/projects", projectController.createProject);
-app.get("/goals", projectController.getGoals);
-
-/**
- * OAuth authentication routes. (Sign in)
- */
-app.get("/auth/facebook", passport.authenticate("facebook", { scope: ["email", "public_profile"] }));
-app.get("/auth/facebook/callback", passport.authenticate("facebook", { failureRedirect: "/login" }), (req, res) => {
-  res.redirect(req.session.returnTo || "/");
-});
+app.get("/newProject", projectController.newProject);
+app.post("/project", projectController.postNewProject);
+app.get("/project/:projectId", projectController.project);
+app.get("/project/:projectId/goals", projectController.getGoals);
+app.post("/project/:projectId/goal", projectController.postGoal);
+app.get("/project/:projectId/hypotheses", projectController.getHypotheses);
+app.get("/project/:projectId/questions", projectController.getQuestions);
+app.get("/project/:projectId/customerData", projectController.getCustomerData);
+app.get("/project/:projectId/reports", projectController.getReports);
 
 
 /**

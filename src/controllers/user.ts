@@ -2,11 +2,12 @@ import * as async from "async";
 import * as crypto from "crypto";
 import * as nodemailer from "nodemailer";
 import * as passport from "passport";
-import {User, UserModel, AuthToken} from "../models/User";
+import {User, UserDocument, AuthToken} from "../models/User";
 import {Request, Response, NextFunction} from "express";
 import {LocalStrategyInfo} from "passport-local";
 import { WriteError } from "mongodb";
 const request = require("express-validator");
+import {Project, ProjectDocument} from "../models/Project";
 
 
 /**
@@ -38,7 +39,7 @@ export let postLogin = (req: Request, res: Response, next: NextFunction) => {
     return res.redirect("/login");
   }
 
-  passport.authenticate("local", (err: Error, user: UserModel, info: LocalStrategyInfo) => {
+  passport.authenticate("local", (err: Error, user: UserDocument, info: LocalStrategyInfo) => {
     if (err) { return next(err); }
     if (!user) {
       req.flash("errors", info);
@@ -80,7 +81,7 @@ export let getSignup = (req: Request, res: Response) => {
  */
 export let postSignup = (req: Request, res: Response, next: NextFunction) => {
   req.assert("email", "Email is not valid").isEmail();
-  req.assert("password", "Password must be at least 4 characters long").len(4);
+  req.assert("password", "Password must be at least 4 characters long").len({min: 4});
   req.assert("confirmPassword", "Passwords do not match").equals(req.body.password);
   req.sanitize("email").normalizeEmail({ gmail_remove_dots: false });
 
@@ -139,7 +140,7 @@ export let postUpdateProfile = (req: Request, res: Response, next: NextFunction)
     return res.redirect("/account");
   }
 
-  User.findById(req.user.id, (err, user: UserModel) => {
+  User.findById(req.user.id, (err, user: UserDocument) => {
     if (err) { return next(err); }
     user.email = req.body.email || "";
     user.profile.name = req.body.name || "";
@@ -165,7 +166,7 @@ export let postUpdateProfile = (req: Request, res: Response, next: NextFunction)
  * Update current password.
  */
 export let postUpdatePassword = (req: Request, res: Response, next: NextFunction) => {
-  req.assert("password", "Password must be at least 4 characters long").len(4);
+  req.assert("password", "Password must be at least 4 characters long").len({min: 4});
   req.assert("confirmPassword", "Passwords do not match").equals(req.body.password);
 
   const errors = req.validationErrors();
@@ -175,7 +176,7 @@ export let postUpdatePassword = (req: Request, res: Response, next: NextFunction
     return res.redirect("/account");
   }
 
-  User.findById(req.user.id, (err, user: UserModel) => {
+  User.findById(req.user.id, (err, user: UserDocument) => {
     if (err) { return next(err); }
     user.password = req.body.password;
     user.save((err: WriteError) => {
@@ -245,7 +246,7 @@ export let getReset = (req: Request, res: Response, next: NextFunction) => {
  * Process the reset password request.
  */
 export let postReset = (req: Request, res: Response, next: NextFunction) => {
-  req.assert("password", "Password must be at least 4 characters long.").len(4);
+  req.assert("password", "Password must be at least 4 characters long.").len({min: 4});
   req.assert("confirm", "Passwords must match.").equals(req.body.password);
 
   const errors = req.validationErrors();
@@ -277,7 +278,7 @@ export let postReset = (req: Request, res: Response, next: NextFunction) => {
           });
         });
     },
-    function sendResetPasswordEmail(user: UserModel, done: Function) {
+    function sendResetPasswordEmail(user: UserDocument, done: Function) {
       const transporter = nodemailer.createTransport({
         service: "SendGrid",
         auth: {
@@ -351,7 +352,7 @@ export let postForgot = (req: Request, res: Response, next: NextFunction) => {
         });
       });
     },
-    function sendForgotPasswordEmail(token: AuthToken, user: UserModel, done: Function) {
+    function sendForgotPasswordEmail(token: AuthToken, user: UserDocument, done: Function) {
       const transporter = nodemailer.createTransport({
         service: "SendGrid",
         auth: {

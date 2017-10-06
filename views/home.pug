@@ -1,5 +1,23 @@
 extends layout
 
 block content
-  h1 CD Assitant
-  p.lead A set of tools for improving your customer development workflow.
+  if user
+    //h1 Let's rock and roll
+    h1 To get started....
+
+    span
+      if session.projects.length > 0
+        h4 Select an existing project:
+          ul
+            each project in session.projects
+              li
+                a(href="/project/"+project._id)=project.name
+        h4 -or- 
+      h4 create a 
+        a(href="/newProject") new project
+
+  else
+    h1 CD Assitant
+    p.lead A set of tools for improving your customer development workflow.
+
+  

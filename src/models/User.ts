@@ -1,16 +1,15 @@
 import * as bcrypt from "bcrypt-nodejs";
 import * as crypto from "crypto";
 import * as mongoose from "mongoose";
+import { ProjectDocument } from "../models/Project";
 
-export type UserModel = mongoose.Document & {
+export type UserDocument = mongoose.Document & {
   email: string,
   password: string,
   passwordResetToken: string,
   passwordResetExpires: Date,
-
-  facebook: string,
   tokens: AuthToken[],
-
+  projects: string[],
   profile: {
     name: string,
     gender: string,
@@ -33,12 +32,8 @@ const userSchema = new mongoose.Schema({
   password: String,
   passwordResetToken: String,
   passwordResetExpires: Date,
-
-  facebook: String,
-  twitter: String,
-  google: String,
   tokens: Array,
-
+  projects: {type: [mongoose.Schema.Types.ObjectId], ref: "Project"},
   profile: {
     name: String,
     gender: String,

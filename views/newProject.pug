@@ -1,8 +1,11 @@
 extends layout
 
 block content
-  .page-header
-    h3 Projects
+  //- .page-header
+    //- h3 Projects
+    //-   each project in projects
+    //-     h4 project.name
+    //-     p project.description
 
   h3 New Project
   form.form-horizontal(id='create-project-form', action='/project', method='POST')

@@ -1,0 +1,22 @@
+h4 Add a new segment:
+  form.form-horizontal(id='segments-form', action='/project/' + project._id + '/segment', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='segmentName') One segment is: 
+      .col-sm-7
+        input.form-control(type='text', name='segmentName', id='segmentName')
+    .form-group
+      label.col-sm-3.control-label(for='segmentSize') which we estimate is:
+      .col-sm-3
+        input.form-control(type='text', name='segmentSize', id='segmentSize')
+      .col-sm-1
+        label.col-sm-3.control-label=project.marketSizeUnit
+    .form-group
+      label.col-sm-3.control-label(for='segmentDescription') this segment is defined by:
+      .col-sm-7
+        textarea.form-control(rows='3', name='segmentDescription', id='segmentDescription ')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-plus
+          | Add

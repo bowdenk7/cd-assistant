@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Project, ProjectDocument } from "../models/Project";
+import { Project } from "../models/Project";
 import { WriteError } from "mongodb";
 import {User} from "../models/User";
 
@@ -7,7 +7,9 @@ export let project = (req: Request, res: Response, next: NextFunction) => {
   Project.findById(req.params.projectId, (err, project) => {
     if (err) { return next(err); }
     req.session.activeProject = project;
+
     res.render("project", {
+      title: "Project Details",
       project: project
     });
   });
@@ -57,13 +59,6 @@ export let postGoal = (req: Request, res: Response) => {
 
 };
 
-export let getHypotheses = (req: Request, res: Response) => {
-  res.render("hypotheses", {
-    title: "Hypotheses",
-    project: req.session.activeProject
-  });
-};
-
 export let getQuestions = (req: Request, res: Response) => {
   res.render("questions", {
     title: "Questions"
@@ -96,11 +91,9 @@ export let postNewProject = (req: Request, res: Response, next: NextFunction) =>
     return res.redirect("/projects");
   }
 
-  const project: ProjectDocument = new Project({
+  const project = new Project({
     name: req.body.projectName,
     description: req.body.description,
-    marketSize: req.body.marketSize,
-    marketSizeUnit: req.body.marketSizeUnit,
     creator: req.user
   });
 

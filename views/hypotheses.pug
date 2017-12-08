@@ -4,3 +4,59 @@ block content
   .page-header
     h1=project.name + " hypotheses"
 
+  h3 Job Hypotheses
+  form.form-horizontal(id='job-hypotheses-form', action='/project/' + project._id + '/hypotheses/jobs', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-2.control-label(for='segment') We believe that
+      .col-sm-3
+        select.form-control(name='segment', id='segment')
+          option(value=null)="Whole Market: " + project.targetMarket
+          for segment in project.segments
+            option(value=segment._id)="Segment: " + segment.name
+      label.col-sm-2.control-label(for='job') are trying to
+      .col-sm-3
+        input.form-control(type='text', name='job', id='job')
+      .col-sm-1
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-plus
+          | Add
+
+  h3 Job Hypotheses
+  form.form-horizontal(id='motivation-hypotheses-form', action='/project/' + project._id + '/hypotheses/motivations', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='goal') Goal
+      .col-sm-7
+        input.form-control(type='text', name='goal', id='goal')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-plus
+          | Add
+
+  h3 Job Hypotheses
+  form.form-horizontal(id='problem-hypotheses-form', action='/project/' + project._id + '/hypotheses/problems', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='goal') Goal
+      .col-sm-7
+        input.form-control(type='text', name='goal', id='goal')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-plus
+          | Add
+
+  h3 Job Hypotheses
+  form.form-horizontal(id='solution-hypotheses-form', action='/project/' + project._id + '/hypotheses/solutions', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='goal') Goal
+      .col-sm-7
+        input.form-control(type='text', name='goal', id='goal')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-plus
+          | Add

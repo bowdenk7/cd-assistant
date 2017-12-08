@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  .page-header
+    h1=project.name + " customer segmentation"
+
+  form.form-horizontal(id='market-form', action='/project/' + project._id + '/targetMarket', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='targetMarket') Our target market is: 
+      .col-sm-7
+        input.form-control(type='text', name='targetMarket', id='targetMarket', value=project.targetMarket)
+    .form-group
+      label.col-sm-3.control-label(for='marketSize') which we estimate is:
+      .col-sm-3
+        input.form-control(type='text', name='marketSize', id='marketSize', value=project.marketSize)
+      label.col-sm-1.control-label(for='marketSizeUnit') unit
+      .col-sm-3
+        input.form-control(type='text', name='marketSizeUnit', id='marketSizeUnit', value=project.marketSizeUnit)
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-save
+          | Save
+  hr
+  h4=project.targetMarket + " can be divided   into the following distinct segments:"
+    if project.segments
+      ul
+        each segment in project.segments
+          li=segment.name + " - " + segment.size + " - " + segment.description
+  
+  hr
+  include partials/newSegmentForm

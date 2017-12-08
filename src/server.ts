@@ -32,6 +32,8 @@ import * as homeController from "./controllers/home";
 import * as userController from "./controllers/user";
 import * as docsController from "./controllers/docs";
 import * as projectController from "./controllers/project";
+import * as segmentController from "./controllers/segment";
+import * as hypothesesController from "./controllers/hypothesis";
 
 /**
  * API keys and Passport configuration.
@@ -126,9 +128,13 @@ app.get("/account/unlink/:provider", passportConfig.isAuthenticated, userControl
 app.get("/newProject", projectController.newProject);
 app.post("/project", projectController.postNewProject);
 app.get("/project/:projectId", projectController.project);
+app.get("/project/:projectId/segments", segmentController.getSegments);
+app.post("/project/:projectId/targetMarket", segmentController.postTargetMarket);
+app.post("/project/:projectId/segment", segmentController.newSegment);
+app.post("/project/:projectId/:segmentIndex", segmentController.updateSegment);
 app.get("/project/:projectId/goals", projectController.getGoals);
 app.post("/project/:projectId/goal", projectController.postGoal);
-app.get("/project/:projectId/hypotheses", projectController.getHypotheses);
+app.get("/project/:projectId/hypotheses", hypothesesController.getHypotheses);
 app.get("/project/:projectId/questions", projectController.getQuestions);
 app.get("/project/:projectId/customerData", projectController.getCustomerData);
 app.get("/project/:projectId/reports", projectController.getReports);

@@ -24,6 +24,8 @@ if user
                     a(href='/project/'+project._id) Project Home
                 li(class=(title == 'Goals') ? 'active' : undefined)
                     a(href='/project/'+project._id+'/goals') Goals
+                li(class=(title == 'Segmentation') ? 'active' : undefined) 
+                    a(href='/project/'+project._id+'/segments') Segmentation
                 li(class=(title == 'Hypotheses') ? 'active' : undefined) 
                     a(href='/project/'+project._id+'/hypotheses') Hypotheses
                 li.disabled

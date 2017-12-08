@@ -1,0 +1,12 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run Watch",
+            "command": "npm run watch",
+            "type": "shell",
+            "args": [],
+            "identifier": "npm run watch"
+        }
+    ]
+}
